@@ -1,7 +1,4 @@
 import { Connection, Pool } from "promise-mysql"
-import { createConnection } from "mysql";
-
-
 
 export async function getAllWords(connection: Pool, numberOfWords: number) {
     const wordList: string[] = []

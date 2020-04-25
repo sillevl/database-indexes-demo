@@ -1,23 +1,35 @@
 import { getAllWords, findWords, findIndexedWords } from './lib/queries'
 import mysql, { PoolConfig } from 'promise-mysql';
 import progressbars, { statistics, printStatistics } from './lib/progressBar'
+import cli from './lib/cli'
 
 const connectionOptions: PoolConfig = {
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'entries'
+    database: 'dictionary'
 };
 
-const numberOfWords: number = parseInt(process.argv[2]) || 100;
+const numberOfWords: number = cli.number || 100;
+const searchWord: string = cli.word;
 
 (async function() {
     console.log('Connecting to MySQL/MariaDB')
     const connection = await mysql.createPool(connectionOptions)
 
-    console.log(`Picking ${numberOfWords} random words`)
-    const words = await getAllWords(connection, numberOfWords)
+    let words: string[] = [];
+    if(searchWord) {
+        console.log('Using given word')
+        for( let i = 0; i < numberOfWords; i++) {
+            words.push(searchWord);
+            i++
+        }
+    } else {
+        console.log(`Picking ${numberOfWords} random words`)
+        words = await getAllWords(connection, numberOfWords)
+    }
+
     console.log(words)
 
     // draw progressbars in console
