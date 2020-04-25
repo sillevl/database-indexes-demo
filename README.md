@@ -4,6 +4,7 @@ A small JavaScript applications that demonstrates the
 performance difference between normal and indexed columns.
 
 This example contains an English dictionary containing 176.023 words and there definitions.
+The database is created using the [MySQL English Dictionary](https://sourceforge.net/projects/mysqlenglishdictionary/).
 Each word is stored inside a normal and indexed column, containing the exact same information.
 
 This database enables to compare `SELECT` queries against normal and indexed columns.
